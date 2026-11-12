@@ -17,7 +17,9 @@ const services = [
     img: Img1,
     alt: "Surveyor capturing terrain and contour data for a topographical survey in Kenya",
     variant: "image",
-    layout: "md:col-span-2 lg:col-span-7 lg:row-span-2 min-h-[520px]",
+    tint: "#f1f5e6",
+    accent: GREEN,
+    layout: "md:col-span-2 lg:col-span-7 lg:row-span-2",
     shape: "rounded-[2rem] max-lg:rounded-br-[4rem] lg:rounded-br-[6rem]",
     description:
       "Topographical surveys mapping terrain, contours and features for planning, design and construction",
@@ -126,14 +128,18 @@ function Reveal({ children, className = "", delay = 0 }) {
   );
 }
 
-function Tags({ tags }) {
+function Tags({ tags, light = false }) {
   if (!tags) return null;
   return (
     <ul className="mt-6 flex flex-wrap gap-2">
       {tags.map((tag) => (
         <li
           key={tag}
-          className="rounded-full border border-white/30 bg-white/10 px-4 py-1.5 text-sm font-medium text-white"
+          className={`rounded-full border px-4 py-1.5 text-sm font-medium ${
+            light
+              ? "border-gray-300 bg-white/70 text-gray-700"
+              : "border-white/30 bg-white/10 text-white"
+          }`}
         >
           {tag}
         </li>
@@ -162,33 +168,45 @@ function ServiceCard({ s, i }) {
         itemScope
         itemType="https://schema.org/Service"
         aria-labelledby={`service-${i}-title`}
-        className={`${common} flex flex-col justify-end flex-1`}
+        className={`${common} flex flex-col border border-gray-200 flex-1`}
+        style={{ backgroundColor: s.tint }}
       >
         {meta}
-        <img
-          src={s.img}
-          alt={s.alt}
-          loading="lazy"
-          itemProp="image"
-          className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/10" />
-        <span
-          className="absolute left-8 top-6 text-5xl font-bold leading-none md:text-6xl text-white/80"
-          aria-hidden="true"
-        >
-          {number}
-        </span>
-        <div className="relative p-8 text-white md:p-10 lg:pr-24">
-          <h3 id={`service-${i}-title`} className="text-2xl font-semibold md:text-3xl">
+        {/* Photo sits on its own, text never goes over it */}
+        <div className="relative h-56 overflow-hidden md:h-72 lg:h-auto lg:min-h-[300px] lg:flex-1">
+          <img
+            src={s.img}
+            alt={s.alt}
+            loading="lazy"
+            itemProp="image"
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+        </div>
+
+        <div className="p-8 md:p-10">
+          <span
+            className="text-5xl font-bold leading-none md:text-6xl"
+            style={{ color: s.accent }}
+            aria-hidden="true"
+          >
+            {number}
+          </span>
+          <h3
+            id={`service-${i}-title`}
+            className="mt-4 text-2xl font-semibold text-gray-800 md:text-3xl"
+          >
             {s.title}
           </h3>
-          <div className="mt-6 space-y-4 text-base leading-relaxed text-white/90 md:text-lg">
+          <div
+            className="mt-4 h-0.5 w-14"
+            style={{ backgroundColor: s.accent }}
+          />
+          <div className="mt-5 space-y-4 text-base leading-relaxed text-gray-600 md:text-lg">
             {s.paragraphs.map((p, idx) => (
               <p key={idx}>{p}</p>
             ))}
           </div>
-          <Tags tags={s.tags} />
+          <Tags tags={s.tags} light />
         </div>
       </article>
     );
