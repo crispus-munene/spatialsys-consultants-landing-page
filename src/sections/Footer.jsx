@@ -44,7 +44,7 @@ function Footer() {
             <div className="flex flex-col gap-3 text-gray-400">
               <div className="flex items-center gap-3">
                 <MapPin className="w-5 h-5 text-[#73951f]" aria-hidden="true" />
-                <span>SpatialSys Consultants Limited <br/> Muchane Plaza, 2nd Floor Suite, Kikuyu.</span>
+                <span>SpatialSys Consultants Limited <br/> Joyland Plaza, 2nd Floor Suite, Ruaka.</span>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-[#73951f]" aria-hidden="true" />
